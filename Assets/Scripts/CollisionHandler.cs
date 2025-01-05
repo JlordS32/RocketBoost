@@ -6,29 +6,42 @@ public class CollisionHandler : MonoBehaviour
 {
     private void OnCollisionEnter(Collision other)
     {
-        switch(other.gameObject.tag) {
-            case "Friendly":
-                Debug.Log("Everything is looking good!");
-                break;
+        switch (other.gameObject.tag)
+        {
             case "Finish":
-                Debug.Log("Done!");
-                break;
-            case "Fuel":
-                Debug.Log("Recharge");
-                break;
-            case "Enemy":
-                EnemyCase();
+                FinishCase();
                 break;
             default:
+                DefaultCase();
                 break;
         }
     }
 
-    private void EnemyCase() {
-        ReloadLevel(0);
+    private void DefaultCase()
+    {
+        ResetLevel();
     }
 
-    private void ReloadLevel(int level) {
-        SceneManager.LoadScene(level);
+    private void FinishCase()
+    {
+        LoadNextLevel(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void LoadNextLevel(int level)
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+
+        if (nextScene == SceneManager.sceneCountInBuildSettings)
+        {
+            nextScene = 0;
+        }
+
+        SceneManager.LoadScene(nextScene);
+    }
+
+    private void ResetLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
