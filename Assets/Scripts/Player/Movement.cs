@@ -10,10 +10,12 @@ public class Movement : MonoBehaviour
 
     // References
     private Rigidbody _rb;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -33,8 +35,14 @@ public class Movement : MonoBehaviour
         if (_thrustButton.IsPressed())
         {
             _rb.AddRelativeForce(Vector3.up * _thrustPower * Time.fixedDeltaTime);
-        }
 
+            if (!_audioSource.isPlaying)
+            {
+                _audioSource.Play();
+            }
+        } else {
+            _audioSource.Stop();
+        }
         // Alternative way
         // if (_thrustButton.IsPressed())
         // {
