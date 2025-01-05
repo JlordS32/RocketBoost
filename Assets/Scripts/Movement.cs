@@ -47,18 +47,23 @@ public class Movement : MonoBehaviour
 
     private void ProcessRotation()
     {
-        float rotationInput =_rotation.ReadValue<float>();
+        float rotationInput = _rotation.ReadValue<float>();
 
-        if (rotationInput < 0) {
+        if (rotationInput < 0)
+        {
             ApplyRotation(_rotationStrength);
         }
-        else if (rotationInput > 0) {
+        else if (rotationInput > 0)
+        {
             ApplyRotation(-_rotationStrength);
         }
     }
 
-    private void ApplyRotation(float rotationThisFrame) {
+    private void ApplyRotation(float rotationThisFrame)
+    {
+        _rb.freezeRotation = true;
         transform.Rotate(Vector3.forward * rotationThisFrame * Time.fixedDeltaTime);
+        _rb.freezeRotation = false;
     }
 
     private void OnDisable()
