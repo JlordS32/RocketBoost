@@ -254,6 +254,7 @@ MonoBehaviour:
     m_Flags: 0
   _thrustPower: 500
   _rotationStrength: 50
+  _thrustSound: {fileID: 8300000, guid: 7a208af24ba161b4c9a1657a72669087, type: 3}
 --- !u!114 &7047802793717308286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,6 +267,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee80ce995b7db0e47b6080fea162fb41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _levelLoadDelay: 2
+  _crash: {fileID: 8300000, guid: 35a997854f811de449af57b6c207ef0d, type: 3}
+  _success: {fileID: 8300000, guid: 5c58290e63ba57245b8528f634f50c86, type: 3}
 --- !u!1001 &1752871621094401655
 PrefabInstance:
   m_ObjectHideFlags: 0

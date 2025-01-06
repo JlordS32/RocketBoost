@@ -1,33 +1,49 @@
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] private float _levelLoadDelay = 2f;
+    [SerializeField] private AudioClip _crash;
+    [SerializeField] private AudioClip _success;
+
+    // References
+    private AudioSource _audioSource;
+
+    private void Awake() {
+        _audioSource = GetComponent<AudioSource>();
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
         {
+            case "Friendly":
+                break;
             case "Finish":
-                FinishCase();
+                StartSuccessSequence();
                 break;
             default:
-                DefaultCase();
+                StartCrashSequence();
                 break;
         }
     }
 
-    private void DefaultCase()
+    private void StartCrashSequence()
     {
-        ResetLevel();
+        _audioSource.PlayOneShot(_crash);
+        GetComponent<Movement>().enabled = false;
+        Invoke(nameof(ResetLevel), _levelLoadDelay);
     }
 
-    private void FinishCase()
+    private void StartSuccessSequence()
     {
-        LoadNextLevel(SceneManager.GetActiveScene().buildIndex);
+        _audioSource.PlayOneShot(_success);
+        GetComponent<Movement>().enabled = false;
+        Invoke(nameof(LoadNextLevel), _levelLoadDelay);
     }
 
-    private void LoadNextLevel(int level)
+    private void LoadNextLevel()
     {
         int currentScene = SceneManager.GetActiveScene().buildIndex;
         int nextScene = currentScene + 1;

@@ -3,10 +3,11 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] InputAction _thrustButton;
-    [SerializeField] InputAction _rotation;
-    [SerializeField] float _thrustPower = 100f;
-    [SerializeField] float _rotationStrength = 100f;
+    [SerializeField] private InputAction _thrustButton;
+    [SerializeField] private InputAction _rotation;
+    [SerializeField] private float _thrustPower = 100f;
+    [SerializeField] private float _rotationStrength = 100f;
+    [SerializeField] private AudioClip _thrustSound;
 
     // References
     private Rigidbody _rb;
@@ -38,7 +39,7 @@ public class Movement : MonoBehaviour
 
             if (!_audioSource.isPlaying)
             {
-                _audioSource.Play();
+                _audioSource.PlayOneShot(_thrustSound);
             }
         } else {
             _audioSource.Stop();
