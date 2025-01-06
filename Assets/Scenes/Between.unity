@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: db17e9a39afbfa64ab16ce0f55ab0852, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: 192727756}
   - component: {fileID: 192727755}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Fuel
   m_TagString: Fuel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 192727754}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.54, y: 4.55, z: -3.76}
+  m_LocalPosition: {x: 5.47, y: 5.71, z: -3.76}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -578,7 +578,7 @@ Light:
   serializedVersion: 11
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 2
+  m_Intensity: 0.98
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -808,7 +808,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308346853069881125, guid: 8c01e1fd86a053c4190e22537bcc61f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.9700003
+      value: 8.28
       objectReference: {fileID: 0}
     - target: {fileID: 3308346853069881125, guid: 8c01e1fd86a053c4190e22537bcc61f9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -977,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3308346853069881125, guid: 8c01e1fd86a053c4190e22537bcc61f9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.97
+      value: 8.28
       objectReference: {fileID: 0}
     - target: {fileID: 3308346853069881125, guid: 8c01e1fd86a053c4190e22537bcc61f9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1318,6 +1318,10 @@ PrefabInstance:
     - target: {fileID: 6078081268060468907, guid: 2b0f4296a32b35044a020f16809b1de3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7274701360611204452, guid: 2b0f4296a32b35044a020f16809b1de3, type: 3}
+      propertyPath: _thrustPower
+      value: 3000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
