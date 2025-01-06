@@ -57,13 +57,13 @@ public class Movement : MonoBehaviour
 
         if (rotationInput < 0)
         {
-            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
             ApplyRotation(_rotationStrength);
+            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
         }
         else if (rotationInput > 0)
         {
-            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
             ApplyRotation(-_rotationStrength);
+            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
         }
         else
         {
