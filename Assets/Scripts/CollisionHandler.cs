@@ -60,6 +60,7 @@ public class CollisionHandler : MonoBehaviour
     private void StartSequence(string particleName, string functionName, AudioClip audio)
     {
         ParticleSystem particle = _particleObjects.GetParticleByName(particleName).Particle;
+        
         particle.Play();
         _isControllable = false;
         _audioSource.Stop();
