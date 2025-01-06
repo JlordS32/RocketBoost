@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
@@ -13,15 +14,23 @@ public class CollisionHandler : MonoBehaviour
 
     // Variables
     private bool _isControllable;
+    private bool _isCollidable;
 
-    private void Awake() {
+    private void Awake()
+    {
         _audioSource = GetComponent<AudioSource>();
         _isControllable = true;
+        _isCollidable = true;
+    }
+
+    private void Update()
+    {
+        RespondToDebugKey();
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        if (!_isControllable) return;
+        if (!_isControllable || !_isCollidable) return;
 
         switch (other.gameObject.tag)
         {
@@ -36,7 +45,20 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
-    private void StartSequence(string particleName, string functionName, AudioClip audio) {
+    private void RespondToDebugKey()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextLevel();
+            Debug.Log("L was pressed, going next level.");
+        } else if (Input.GetKeyDown(KeyCode.C)) {
+            _isCollidable = !_isCollidable;
+            Debug.Log("C was pressed, toggling Collidable.");
+        }
+    }
+
+    private void StartSequence(string particleName, string functionName, AudioClip audio)
+    {
         ParticleSystem particle = _particleObjects.GetParticleByName(particleName).Particle;
         particle.Play();
         _isControllable = false;
