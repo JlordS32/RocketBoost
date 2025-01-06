@@ -66,13 +66,8 @@ public class Movement : MonoBehaviour
         ParticleSystem leftEngineParticle = _particlesObjects.GetParticleByName("LeftEngine").Particle;
         ParticleSystem rightEngineParticle = _particlesObjects.GetParticleByName("RightEngine").Particle;
 
-        if (rotationInput < 0)
-        {
-            RotateLeft(leftEngineParticle, rightEngineParticle);
-        }
-        else if (rotationInput > 0)
-        {
-            RotateRight(leftEngineParticle, rightEngineParticle);
+        if (rotationInput != 0) {
+            Rotate(leftEngineParticle, rightEngineParticle, rotationInput);
         }
         else
         {
@@ -80,24 +75,20 @@ public class Movement : MonoBehaviour
         }
     }
 
+    private void Rotate(ParticleSystem leftEngineParticle, ParticleSystem rightEngineParticle, float rotationThisFrame) {
+        ApplyRotation(-_rotationStrength * rotationThisFrame);
+        Debug.Log(rotationThisFrame);
 
-    private void RotateRight(ParticleSystem leftEngineParticle, ParticleSystem rightEngineParticle)
-    {
-        ApplyRotation(-_rotationStrength);
-        if (!rightEngineParticle.isPlaying)
-        {
-            leftEngineParticle.Play();
-            rightEngineParticle.Stop();
-        }
-    }
-
-    private void RotateLeft(ParticleSystem leftEngineParticle, ParticleSystem rightEngineParticle)
-    {
-        ApplyRotation(_rotationStrength);
-        if (!leftEngineParticle.isPlaying)
+        if (rotationThisFrame < 0.001f)
         {
             rightEngineParticle.Play();
             leftEngineParticle.Stop();
+        }
+
+        if (rotationThisFrame > 0.001f)
+        {
+            leftEngineParticle.Play();
+            rightEngineParticle.Stop();
         }
     }
 
