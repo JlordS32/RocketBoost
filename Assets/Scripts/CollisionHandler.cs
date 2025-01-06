@@ -4,8 +4,9 @@ using UnityEngine.SceneManagement;
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] private float _levelLoadDelay = 2f;
-    [SerializeField] private AudioClip _crash;
-    [SerializeField] private AudioClip _success;
+    [SerializeField] private AudioClip _crashSFX;
+    [SerializeField] private AudioClip _successSFX;
+    [SerializeField] private Particles[] _particles;
 
     // References
     private AudioSource _audioSource;
@@ -27,30 +28,26 @@ public class CollisionHandler : MonoBehaviour
             case "Friendly":
                 break;
             case "Finish":
-                StartSuccessSequence();
+                StartSequence("Success", nameof(LoadNextLevel), _successSFX);
                 break;
             default:
-                StartCrashSequence();
+                StartSequence("Crash", nameof(ResetLevel), _crashSFX);
                 break;
         }
     }
 
-    private void StartCrashSequence()
-    {
-        _isControllable = false;
-        _audioSource.Stop();
-        _audioSource.PlayOneShot(_crash);
-        GetComponent<Movement>().enabled = false;
-        Invoke(nameof(ResetLevel), _levelLoadDelay);
-    }
+    private void StartSequence(string particleName, string functionName, AudioClip audio) {
+        foreach (var particle in _particles) {
+            if (particle.Name == "particleName") {
+                particle.Particle.Play();
+            }
+        }
 
-    private void StartSuccessSequence()
-    {
         _isControllable = false;
         _audioSource.Stop();
-        _audioSource.PlayOneShot(_success);
+        _audioSource.PlayOneShot(audio);
         GetComponent<Movement>().enabled = false;
-        Invoke(nameof(LoadNextLevel), _levelLoadDelay);
+        Invoke(functionName, _levelLoadDelay);
     }
 
     private void LoadNextLevel()
@@ -70,4 +67,15 @@ public class CollisionHandler : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+}
+
+[System.Serializable]
+public struct Particles
+{
+    [SerializeField] private string _name;
+    [SerializeField] private ParticleSystem _particle;
+
+    // Optionally, you can add getter methods if needed
+    public string Name => _name;
+    public ParticleSystem Particle => _particle;
 }
