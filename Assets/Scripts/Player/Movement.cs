@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float _thrustPower = 100f;
     [SerializeField] private float _rotationStrength = 100f;
     [SerializeField] private AudioClip _thrustSound;
+    [SerializeField] private ParticleObject _particlesObjects;
 
     // References
     private Rigidbody _rb;
@@ -33,38 +34,40 @@ public class Movement : MonoBehaviour
 
     private void ProcessThrust()
     {
+        ParticleSystem mainEngineParticle = _particlesObjects.GetParticleByName("MainEngine").Particle;
+
         if (_thrustButton.IsPressed())
         {
-            _rb.AddRelativeForce(Vector3.up * _thrustPower * Time.fixedDeltaTime);
+            _rb.AddRelativeForce(Time.fixedDeltaTime * (_thrustPower * Vector3.up));
 
-            if (!_audioSource.isPlaying)
-            {
-                _audioSource.PlayOneShot(_thrustSound);
-            }
-        } else {
+            if (!_audioSource.isPlaying) _audioSource.PlayOneShot(_thrustSound);
+            if (!mainEngineParticle.isPlaying) mainEngineParticle.Play();
+        }
+        else
+        {
+            mainEngineParticle.Stop();
             _audioSource.Stop();
         }
-        // Alternative way
-        // if (_thrustButton.IsPressed())
-        // {
-        //     float horizontalInput = Input.GetAxis("Horizontal");
-        //     Vector3 newVelocity = _rb.linearVelocity + new Vector3(horizontalInput * Time.fixedDeltaTime, _thrustPower * Time.fixedDeltaTime, 0);
-
-        //     _rb.linearVelocity = newVelocity;
-        // }
     }
 
     private void ProcessRotation()
     {
         float rotationInput = _rotation.ReadValue<float>();
+        ParticleSystem sideEngineThrust = _particlesObjects.GetParticleByName(rotationInput < 0 ? "RightEngine" : "LeftEngine").Particle;
 
         if (rotationInput < 0)
         {
+            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
             ApplyRotation(_rotationStrength);
         }
         else if (rotationInput > 0)
         {
+            if (!sideEngineThrust.isPlaying) sideEngineThrust.Play();
             ApplyRotation(-_rotationStrength);
+        }
+        else
+        {
+            sideEngineThrust.Stop();
         }
     }
 

@@ -6,7 +6,7 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] private float _levelLoadDelay = 2f;
     [SerializeField] private AudioClip _crashSFX;
     [SerializeField] private AudioClip _successSFX;
-    [SerializeField] private Particles[] _particles;
+    [SerializeField] private ParticleObject _particleObjects;
 
     // References
     private AudioSource _audioSource;
@@ -37,12 +37,8 @@ public class CollisionHandler : MonoBehaviour
     }
 
     private void StartSequence(string particleName, string functionName, AudioClip audio) {
-        foreach (var particle in _particles) {
-            if (particle.Name == "particleName") {
-                particle.Particle.Play();
-            }
-        }
-
+        ParticleSystem particle = _particleObjects.GetParticleByName(particleName).Particle;
+        particle.Play();
         _isControllable = false;
         _audioSource.Stop();
         _audioSource.PlayOneShot(audio);
@@ -67,15 +63,4 @@ public class CollisionHandler : MonoBehaviour
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-}
-
-[System.Serializable]
-public struct Particles
-{
-    [SerializeField] private string _name;
-    [SerializeField] private ParticleSystem _particle;
-
-    // Optionally, you can add getter methods if needed
-    public string Name => _name;
-    public ParticleSystem Particle => _particle;
 }
